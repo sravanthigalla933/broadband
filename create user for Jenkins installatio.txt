@@ -1,0 +1,166 @@
+create user for Jenkins installations
+1. login as root
+2. mkdir -p /u01/app
+3. useradd -d /u01/app/oracle -s /bin/bash oracle
+4. passwd oracle
+   set the password as oracle
+5. exit from root user and login as oracle with new putty window
+-------
+
+
+install Jenkins and java with oracle user
+1. create directories under /u01/app/oracle
+    mkdir devops
+    cd  devops
+    mkdir 2.5 java env
+
+    
+1. install tomcat
+   download tomcat 
+   wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.61/bin/apache-tomcat-10.1.61.tar.gz --no-check-certificate
+   or 
+   download to your windows and transfer through WinSCP
+   1. extract the tomcat
+     tar -zxvf  apache-tomcat-10.1.61.tar.gz
+     mv apache-tomcat-10.1.61 tomcat1    
+2. install java
+    https://www.oracle.com/java/technologies/downloads/#java25
+    download to your local system and transfer to your Linux server with WinSCP
+    login with oracle user through WinSCP and transfer to Linux server
+     
+     tar -zxvf jdk-25_linux-x64_bin.tar.gz
+      mv jdk-25.0.4.1 jdk25
+
+3. install Jenkins
+    download Jenkins.war file from https://www.jenkins.io/download/
+    transfer Jenkins.war file to Linux 
+
+   all the files should be under /u01/app/oracle/devops
+
+
+
+19/10/2026
+http://192.168.1.8:8080/jenkins
+cat  Catalina.out
+
+9eb831bf20084a3c94f36a8019a30966
+
+
+20/10/2026
+
+
+
+
+21/10/2026
+
+Tomcat has installed with root owebship but startes with Oracle user and Oracle user doesn't have previlages to start tomcat since it was having root ownership
+
+
+#!/bin/bash
+IFS=','
+for i in $App_deploy
+do
+echo "selected app $i: deployed successfully"
+done
+
+
+a.     Provide the Boolean parameters: ( true or false ex- you want to start the server or not if you want select true or false)
+Name as value1
+Description as enter some value
+b.     Under build section -> execute shell -> command as echo “$value1”
+c.      go to build with parameter-check it—build
+d.     Then go to console output. It will be true
+Note: if you build without checking the box it will be false
+
+
+23/10/2026
+1)
+#!/bin/bash
+echo "welcome to jenkins"
+echo "student name: $student_name"
+echo "this is mainly for testing sting parameters"
+echo "Hi! $student_name your job executed successfully"
+
+2)
+#!/bin/bash
+echo "Deployment started"
+if [ "$Environment" = "dev" ]
+then
+   echo " Deploying to dev environment"
+elif [ "$Environment" = "test" ]
+then
+   echo "Deploying to test environment"
+elif [ "$Environment" = "prod" ]
+then
+   echo "Deploying to Production environment"
+else
+   echo "Invalid environment $Environment"
+fi
+
+
+3)
+#!/bin/bash
+echo "This is for application login demo"
+if  [ -z "$App_password" ]
+then
+   echo "Password is empty.. exiting from the program"
+   exit
+elif [ $App_password = "welcome1" ]
+then
+   echo "password is matching connecting to apps server"
+else
+   echo "Password is mismatching"
+fi
+
+
+
+24/10/2026
+
+1)Active Choice parameter
+General >This project is parameterized > Select "Active choice Parameter" 
+Name: domain
+Script: Groovy Script
+return['Finance', 'Marketing']
+Executable shell: 
+echo "$domain"
+Configure > Build with Parameters
+domain: Finance
+Console output: Success
+
+2)Active choice reactive parameter
+General >This project is parameterized > Select "Active choice reactive Parameter" 
+Name: Applications, Script: Groovy Script, Groovy Script: 
+if(Domain.equals("Finance"))
+{
+return['benefits','timeoff']
+}
+else
+{
+return['whatsapp','facebook']
+}
+Reference Parameter: Domain
+Executable shell:
+echo "$Applications"
+
+
+
+
+2)
+
+
+
+200......  successfully processed
+404 ......file not found.....this happens whenever application is not activate or else any dependent application down.
+403....... forbidden.......unauthorised access.If user doesnt have the authorisation to acess the perticular functionality then we see exeption for example whenever SSL hand shake happens during that time this error occurs.
+301.......permanently redirected
+302......temporary redirected 
+303..... redirection(get method) / or occurs when a page has been temporarily moved
+304..... redirection(put method) /the requested resource has not been modified since the last time it was loaded, and there's no need to transfer it again.
+500......Internal server error for example Internally if the request is not processing due to the JNDI issue or some other issue  you will see the in internal server error
+503.....Backend server not available ( If all the application servers (weblogic) are down then you see this exception
+502 .. bad gateway ( if the proxy not able process the request due to incorrect context path configurtion then you see this error)
+
+
+
+
+
